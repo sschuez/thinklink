@@ -1,0 +1,26 @@
+{% if page.lang == 'en' %}
+  {% assign footer_rights = '© 2026 ThinkLink Association · All rights reserved' %}
+  {% assign footer_imprint = 'Imprint' %}
+  {% assign footer_imprint_url = '/en/imprint.html' %}
+  {% assign footer_privacy = 'Privacy' %}
+  {% assign footer_privacy_url = '/en/privacy.html' %}
+  {% assign footer_statutes = 'Statutes' %}
+{% else %}
+  {% assign footer_rights = '© 2026 ThinkLink Association · Alle Rechte vorbehalten' %}
+  {% assign footer_imprint = 'Impressum' %}
+  {% assign footer_imprint_url = '/impressum.html' %}
+  {% assign footer_privacy = 'Datenschutz' %}
+  {% assign footer_privacy_url = '/datenschutz.html' %}
+  {% assign footer_statutes = 'Statuten' %}
+{% endif %}
+
+<footer class="site-footer">
+  <div class="container site-footer-inner">
+    <div>{{ footer_rights }}</div>
+    <div class="site-footer-links">
+      <a href="{{ footer_imprint_url | relative_url }}">{{ footer_imprint }}</a>
+      <a href="{{ footer_privacy_url | relative_url }}">{{ footer_privacy }}</a>
+      <a href="#">{{ footer_statutes }}</a>
+    </div>
+  </div>
+</footer>

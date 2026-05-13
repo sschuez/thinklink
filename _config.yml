@@ -1,0 +1,29 @@
+title: "ThinkLink Association"
+description: "Gemeinnütziger Schweizer Verein für transdisziplinäres Denken zur Bewältigung globaler Polykrisen."
+
+# baseurl is empty for a custom-domain or apex Pages site.
+# Set to "/<repo>" if deploying to <user>.github.io/<repo>/
+baseurl: ""
+url: ""
+
+exclude:
+  - README.md
+  - CLAUDE.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle
+
+# Auto-apply layout and language by path so individual pages only declare
+# what differs from page to page (title, description, alternate_url).
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+      lang: de
+  - scope:
+      path: "en"
+    values:
+      layout: default
+      lang: en

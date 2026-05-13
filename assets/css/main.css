@@ -20,6 +20,7 @@
     16. Footer
     17. Utilities
     18. Motion
+    19. Legal pages
    ============================================================ */
 
 
@@ -914,4 +915,68 @@ section {
     transition: none;
   }
   html { scroll-behavior: auto; }
+}
+
+
+/* ====== 19. Legal pages ====== */
+
+.legal {
+  padding: clamp(48px, 8vh, 96px) 0 clamp(72px, 12vh, 120px);
+}
+
+.legal-prose {
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.legal-prose h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 1em;
+}
+
+.legal-prose h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.7vw, 1.35rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-top: 2.2em;
+  margin-bottom: 0.5em;
+}
+
+.legal-prose p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 1em;
+}
+
+.legal-prose a {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+}
+
+.legal-prose a:hover {
+  color: var(--moss);
+  border-color: var(--moss);
+}
+
+.legal-prose strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.legal-meta {
+  margin-top: 2.4em;
+  padding-top: 1.4em;
+  border-top: 1px solid var(--rule-soft);
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
 }

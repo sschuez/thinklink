@@ -14,7 +14,16 @@
 node_modules/
 npm-debug.log*
 
-# Build output (in case a static generator is added later)
+# Jekyll
 _site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Bundler
+.bundle/
+vendor/
+
+# Build output / generators
 dist/
 .cache/

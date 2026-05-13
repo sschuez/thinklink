@@ -1,75 +1,97 @@
 # ThinkLink Association — Homepage
 
-Static homepage for the ThinkLink Association. Plain HTML, CSS and a small JavaScript file. No build step.
+Static site for the ThinkLink Association. German + English, built with **Jekyll** so that the header, footer and `<head>` aren't duplicated across pages. Jekyll runs on GitHub Pages natively — pushing to `main` is enough to deploy.
 
 ## Stack
 
-- HTML5
-- CSS3 (custom properties, grid, flexbox)
+- HTML5, CSS3 (custom properties, grid, flexbox)
 - Vanilla JavaScript (single `IntersectionObserver` for scroll reveals)
-- Google Fonts: Newsreader (serif) + Public Sans (sans)
+- Self-hosted variable fonts: Newsreader (serif) + Public Sans (sans). **No** Google Fonts request at runtime.
+- Jekyll 4 via the `github-pages` gem
 
-No frameworks, no bundlers, no dependencies.
+No bundlers, no JavaScript frameworks, no analytics, no third-party requests, no cookies.
 
 ## Project structure
 
 ```
-thinklink-homepage/
-├── index.html
-├── README.md
-├── .gitignore
+.
+├── _config.yml             # Jekyll config (layout + lang defaults by path)
+├── Gemfile                 # pins to the github-pages bundle
+├── _layouts/
+│   └── default.html        # <html><head>+header+content+footer+script
+├── _includes/
+│   ├── head.html
+│   ├── header.html         # bilingual nav (switches on page.lang)
+│   └── footer.html         # bilingual legal-page links + statutes
+├── index.html              # DE home (front matter + body only)
+├── impressum.html
+├── datenschutz.html
+├── en/
+│   ├── index.html          # EN home
+│   ├── imprint.html
+│   └── privacy.html
 └── assets/
     ├── css/
-    │   ├── tokens.css      # Design tokens (colors, fonts, spacing)
-    │   └── main.css        # Layout, components, utilities
-    ├── js/
-    │   └── main.js         # Scroll reveal observer
-    └── img/                # Portraits and other assets (add yours here)
+    │   ├── tokens.css      # @font-face + design tokens
+    │   └── main.css        # layout, components, utilities
+    ├── fonts/              # drop .woff2 files in here (see README.md inside)
+    ├── img/
+    └── js/
+        └── main.js
 ```
 
 ## Local development
 
-The site is fully static. Two options:
+```
+bundle install            # one-time, pulls Jekyll via github-pages gem
+bundle exec jekyll serve  # http://localhost:4000
+```
 
-**Option 1, open the file directly**
-```
-open index.html
-```
-Works for most cases. Some browsers restrict things like local fonts when opened via `file://`.
+The `bundle install` step needs Ruby (macOS ships it; otherwise install via Homebrew or `mise` / `asdf`). After that, only `jekyll serve` is needed for day-to-day work.
 
-**Option 2, serve it locally** (recommended)
-```
-python3 -m http.server 4000
-```
-Then open `http://localhost:4000`. Any static server works (Ruby `ruby -run -e httpd . -p 4000`, Node `npx serve`, etc.).
+## Fonts
+
+The site references `assets/fonts/Newsreader.woff2`, `Newsreader-Italic.woff2`, and `PublicSans.woff2`. They're not in the repo — see `assets/fonts/README.md` for the simplest way to fetch them (Google Webfonts Helper). If the files are absent, the browser falls back to the system serif / sans stack and the site still renders.
 
 ## Deploying to GitHub Pages
 
-1. Create a new repository on GitHub, push this directory to `main`.
-2. In the repo: **Settings → Pages**.
-3. Under **Source**, select **Deploy from a branch**, branch `main`, folder `/ (root)`.
-4. Save. The site will be live at `https://<user>.github.io/<repo>/` within a minute.
+1. Push to `main`.
+2. In the repo: **Settings → Pages** → source `Deploy from a branch`, branch `main`, folder `/ (root)`.
+3. GitHub builds with Jekyll automatically.
 
 ### Custom domain (optional)
 
-1. Add a `CNAME` file at the repo root containing only the domain, e.g. `thinklinkassociation.org`.
-2. Configure DNS at the registrar:
-   - For an apex domain: `A` records pointing to GitHub Pages IPs (see GitHub docs).
-   - For a subdomain (`www.`): `CNAME` to `<user>.github.io`.
+1. Add a `CNAME` file at the repo root containing only the domain.
+2. Configure DNS at the registrar (apex `A` records or `www` `CNAME` to `<user>.github.io`).
 3. In repo Settings → Pages, set the custom domain and enable **Enforce HTTPS**.
 
-## Future considerations
+## Adding a page
 
-- **Multiple pages.** When Impressum, Datenschutz and the EN version come, the cleanest move is to migrate to Jekyll (GitHub Pages runs it natively). Layouts and includes will remove duplication. The current HTML translates almost one to one.
-- **Self hosting fonts.** Replace the Google Fonts `<link>` with downloaded `.woff2` files in `assets/fonts/` and `@font-face` declarations in `tokens.css`. Improves performance and removes a third party request (relevant for nDSG and Schrems II considerations on Swiss sites).
-- **Portraits.** Drop images into `assets/img/`, replace the `.portrait-initials` divs in `index.html` with `<img>` tags.
+1. Create `newpage.html` (DE) and `en/newpage.html` (EN) at the right level.
+2. Add front matter to each:
+   ```yaml
+   ---
+   title: "..."
+   description: "..."
+   alternate_url: /en/newpage.html   # or /newpage.html on the EN side
+   ---
+   ```
+3. `_config.yml` auto-applies the layout and the language from the path — no need to repeat `layout:` or `lang:`.
+
+## Adding a navigation link
+
+The nav is defined once, in `_includes/header.html`. Add the label and anchor pair in both the EN and DE branches of the include. The anchors on the home page (`id="..."`) must match.
 
 ## Conventions
 
-- Two space indentation in HTML and CSS.
-- Section banners in CSS use `/* ====== Name ====== */` for navigability.
-- Class names follow a light BEM influenced pattern: `block`, `block-element`, `is-state`.
-- Selectors stay shallow. Tokens go in `tokens.css`, everything else in `main.css`.
+- Two-space indentation in HTML, CSS and Liquid.
+- Class names follow a light BEM-influenced pattern: `block`, `block-element`, `is-state`.
+- Selectors stay shallow. Design tokens go in `tokens.css`, everything else in `main.css`. The numbered table of contents at the top of `main.css` matches the `/* ====== N. Name ====== */` banners.
+- Section banners (`/* ====== Name ====== */`) are used to navigate the CSS file.
+
+## Privacy / data protection
+
+The site sets no cookies, makes no third-party requests at runtime, and uses no analytics. Under the revised Swiss Federal Act on Data Protection (revFADP) **no cookie banner is required**. The `datenschutz.html` / `en/privacy.html` page discloses GitHub Pages server logs and the U.S. transfer, which is the only processing that occurs. Review with counsel before going live.
 
 ## License
 
