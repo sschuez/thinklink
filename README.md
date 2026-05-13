@@ -55,9 +55,10 @@ The site references `assets/fonts/Newsreader.woff2`, `Newsreader-Italic.woff2`, 
 
 ## Deploying to GitHub Pages
 
-1. Push to `main`.
-2. In the repo: **Settings → Pages** → source `Deploy from a branch`, branch `main`, folder `/ (root)`.
-3. GitHub builds with Jekyll automatically.
+Deployment is driven by `.github/workflows/jekyll.yml` — push to `main` and the workflow builds with Jekyll and publishes to Pages.
+
+1. In the repo: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+2. Push to `main`. The first run triggers automatically; manual re-runs are available from the Actions tab (`workflow_dispatch`).
 
 ### Custom domain (optional)
 

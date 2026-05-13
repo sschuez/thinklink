@@ -17,7 +17,31 @@ There is no separate lint / test command — `jekyll build` is the only check (`
 
 ## Deployment
 
-GitHub Pages from `main` at repo root. GitHub runs Jekyll on its side — no committed build output. Custom domain handled via a `CNAME` file at repo root.
+GitHub Pages, driven by `.github/workflows/jekyll.yml`. On push to `main`, the workflow installs Ruby, runs `bundle exec jekyll build --baseurl <pages-base-path>` and uploads the result to Pages. Total turnaround push → live is ~60 seconds. No build output is committed. Custom domain handled via a `CNAME` file at repo root.
+
+## Working with this repo from a prompt
+
+Assume the person prompting is not reading the diff and not running anything locally — they want a working website. Default workflow for any prompted change:
+
+1. **Make the change.** Edit only what the request asks for. Don't refactor surrounding code.
+2. **Verify it builds.** `bundle exec jekyll build --baseurl /thinklink` should finish without warnings.
+3. **Commit.** Subject line ~50 chars, plain language ("Update president bio", "Add 2027 conference to activities", "Fix typo in Datenschutz"). **Never mention Claude or AI in commit messages** (see `~/.claude/CLAUDE.md`).
+4. **Push to `main`.** The workflow does the rest. The change is live at https://sschuez.github.io/thinklink/ in about a minute.
+5. **Tell the user** what changed, where to look, and roughly when it'll be live.
+
+For routine content edits (text, dates, names, new sections, new pages), proceed end-to-end without asking for confirmation. **Ask first** before:
+- Adding any third-party request (analytics, embedded video, externally hosted assets) — this breaks the no-banner privacy posture and requires updating `datenschutz.html` and `en/privacy.html`.
+- Adding gems, JS libraries or build steps — the site's lightness is a feature.
+- Changing the deploy workflow or Pages settings.
+
+### Clean-code expectations for any change
+
+- Match the existing conventions — two-space indent, BEM-influenced class names, shallow selectors, tokens in `tokens.css` only, section banners in CSS.
+- Touch the minimum. A bug fix doesn't need surrounding cleanup. A new page reuses existing primitives (`.legal-prose`, `.section-head`, `.reveal`) instead of inventing classes.
+- No abstractions for hypothetical future requirements.
+- No comments that restate the code. Add a comment only when the *why* is non-obvious.
+- Mirror everything bilingually — if you edit `index.html`, edit `en/index.html`; same for legal pages. Keep anchor IDs localised (`#zweck` ↔ `#purpose`).
+- When you change navigation labels, footer links, or anything in `_includes/header.html` / `_includes/footer.html`, you only edit *one* file but you change both languages — verify both branches.
 
 ## Architecture
 
@@ -26,6 +50,7 @@ Three layers that together compose every page:
 - **`_config.yml`** sets path-scoped defaults: anything under `/` gets `layout: default` + `lang: de`; anything under `/en/` gets `lang: en`. Individual page front matter only declares `title`, `description`, and `alternate_url` (the URL of the same page in the other language).
 - **`_layouts/default.html`** is the only layout. It wraps a page's body content with `<head>`, header, footer and the JS script tag.
 - **`_includes/header.html`** and **`_includes/footer.html`** branch on `page.lang` at the top of the file (`{% if page.lang == 'en' %}...{% else %}...{% endif %}`) to assign locale-specific labels and anchors, then render once. **All bilingual chrome lives in these two files** — to add or rename a nav link, edit only these.
+- **`_includes/head.html`** delegates titles, descriptions, canonical URL, Open Graph and Twitter card tags to the `{% seo %}` tag from the `jekyll-seo-tag` plugin (auto-loaded via `github-pages`). Hreflang is hand-rolled because seo-tag doesn't emit per-language alternates. Organization JSON-LD lives in **`_includes/structured-data.html`** and is included on every page.
 
 ### Anchor IDs are localised by language
 
@@ -76,6 +101,7 @@ The files themselves are not in the repo. See `assets/fonts/README.md` for where
 ## Adding a new page
 
 1. Create `<slug>.html` (DE) at root and `en/<slug>.html` (EN) under `en/`.
-2. Front matter on each: `title`, `description`, `alternate_url` pointing at the other-language version.
-3. `_config.yml` auto-applies layout + lang. No need to repeat them.
+2. Front matter on each: `title` (page-specific only — `jekyll-seo-tag` appends `| ThinkLink Association`), `description`, `alternate_url` pointing at the other-language version.
+3. `_config.yml` auto-applies layout + lang + locale. No need to repeat them.
 4. If the page should appear in the main nav, add the entry to both branches of `_includes/header.html`.
+5. `jekyll-sitemap` picks the new page up automatically; nothing else to wire.
