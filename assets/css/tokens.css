@@ -1,0 +1,41 @@
+/* ============================================================
+   Design tokens
+   ------------------------------------------------------------
+   Centralised custom properties. Change values here, not in
+   component styles. Keeps the visual system consistent.
+   ============================================================ */
+
+:root {
+  /* Colour: paper and ink */
+  --paper:        #F0EADE;
+  --paper-deep:   #E7DFCF;
+  --ink:          #14130E;
+  --ink-soft:     #3A382F;
+  --ink-muted:    #6B6855;
+
+  /* Colour: accent */
+  --moss:         #2F3D2C;
+  --moss-soft:    #4A5A45;
+
+  /* Colour: structural */
+  --rule:         #C9BFA8;
+  --rule-soft:    #DCD3BD;
+
+  /* Typography */
+  --serif: "Newsreader", "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --sans:  "Public Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+  /* Type scale (used inline with clamp where it varies) */
+  --fs-body:      18px;
+  --lh-body:      1.55;
+
+  /* Layout */
+  --content-max:  1280px;
+  --gutter:       clamp(1.25rem, 4vw, 2.5rem);
+
+  /* Motion */
+  --ease-out:     cubic-bezier(0.22, 0.61, 0.36, 1);
+  --t-fast:       180ms;
+  --t-base:       320ms;
+  --t-slow:       800ms;
+}
