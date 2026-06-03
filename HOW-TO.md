@@ -19,7 +19,9 @@ publishes it. Diese Seite ist für **Nicht-Techniker:innen** gedacht.
 
 Nichts geht online, bevor du es gesehen und freigegeben hast. Vor der Vorschau prüft
 der Assistent automatisch, dass die Website lädt und alle Links und Bilder
-funktionieren — falls etwas kaputt ist, wird es zuerst repariert. Der Ablauf:
+funktionieren — falls etwas kaputt ist, wird es zuerst repariert. Hat in der
+Zwischenzeit jemand anderes etwas geändert, holt der Assistent zuerst die aktuelle
+Version, damit sich eure Änderungen nicht gegenseitig überschreiben. Der Ablauf:
 
 1. **Vorschau.** Der Assistent startet eine lokale Vorschau und gibt dir einen Link —
    **<http://localhost:4000/>** (Englisch: **<http://localhost:4000/en/>**) — und sagt dir,
@@ -83,7 +85,9 @@ Datenschutzerklärung anpassen oder doch ein Cookie-Banner ergänzen).
 
 Nothing goes public until you've seen it and approved it. Before showing you the
 preview, the assistant automatically checks that the site builds and that every link
-and image works — if something's broken, it's fixed first. The flow:
+and image works — if something's broken, it's fixed first. If a colleague changed
+something in the meantime, the assistant pulls their latest version first, so your
+edits don't overwrite each other. The flow:
 
 1. **Preview.** The assistant starts a local preview and gives you a link —
    **<http://localhost:4000/>** (English: **<http://localhost:4000/en/>**) — and tells you

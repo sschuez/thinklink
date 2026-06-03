@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(git status:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git restore:*)",
+      "Bash(bundle install:*)",
+      "Bash(bundle exec jekyll build:*)",
+      "Bash(bundle exec jekyll serve:*)",
+      "Bash(bundle exec htmlproofer:*)"
+    ]
+  }
+}

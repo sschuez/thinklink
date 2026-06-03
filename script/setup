@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+#
+# Sets up this Mac (or Linux) to edit and publish the ThinkLink site via Claude Code.
+# Safe to re-run any number of times: it checks first and only installs what's missing.
+#
+# Claude runs this for a new editor, reads the summary, and walks the person through
+# any "ACTION NEEDED" item in plain language, then re-runs until everything is green.
+#
+#   ./script/setup
+#
+set -uo pipefail
+
+RUBY_REQ="3.3"
+REPO_SSH_OK=0
+ACTIONS=()
+
+say()    { printf "\n\033[1m▶ %s\033[0m\n" "$1"; }
+ok()     { printf "  ✅ %s\n" "$1"; }
+warn()   { printf "  ⚠️  %s\n" "$1"; }
+bad()    { printf "  ❌ %s\n" "$1"; }
+action() { ACTIONS+=("$1"); printf "  👉 ACTION NEEDED: %s\n" "$1"; }
+have()   { command -v "$1" >/dev/null 2>&1; }
+
+cd "$(dirname "$0")/.." || exit 1
+OS="$(uname -s)"
+
+say "Operating system"
+if [ "$OS" = "Darwin" ]; then
+  ok "macOS detected"
+elif [ "$OS" = "Linux" ]; then
+  ok "Linux detected"
+else
+  bad "This script is for macOS/Linux. On Windows use: powershell -ExecutionPolicy Bypass -File script/setup.ps1"
+  exit 1
+fi
+
+# ---------------------------------------------------------------------------
+say "C toolchain (some gems compile native code)"
+if [ "$OS" = "Darwin" ]; then
+  if xcode-select -p >/dev/null 2>&1; then
+    ok "Xcode command-line tools present"
+  else
+    xcode-select --install >/dev/null 2>&1 || true
+    action "Finish the Xcode command-line tools install dialog that just opened, then re-run this script."
+  fi
+else
+  if have cc || have gcc; then ok "compiler present"; else
+    action "Install build tools (e.g. 'sudo apt-get install -y build-essential') then re-run."
+  fi
+fi
+
+# ---------------------------------------------------------------------------
+say "Git"
+if have git; then ok "git $(git --version | awk '{print $3}')"; else
+  if [ "$OS" = "Darwin" ]; then action "Install git (it comes with the Xcode tools above) then re-run."
+  else action "Install git ('sudo apt-get install -y git') then re-run."; fi
+fi
+
+# ---------------------------------------------------------------------------
+say "GitHub CLI (for login + push)"
+if have gh; then
+  ok "gh installed"
+else
+  if [ "$OS" = "Darwin" ] && have brew; then
+    warn "installing gh via Homebrew…"; brew install gh >/dev/null 2>&1 && ok "gh installed" || action "Run 'brew install gh' then re-run."
+  elif [ "$OS" = "Darwin" ]; then
+    action "Install Homebrew from https://brew.sh, then run 'brew install gh', then re-run."
+  else
+    action "Install the GitHub CLI from https://github.com/cli/cli#installation then re-run."
+  fi
+fi
+
+# ---------------------------------------------------------------------------
+say "GitHub login"
+if have gh && gh auth status >/dev/null 2>&1; then
+  ok "logged in as $(gh api user -q .login 2>/dev/null || echo 'authenticated')"
+elif have gh; then
+  action "Run 'gh auth login' (choose GitHub.com → HTTPS → login with a browser), then re-run. You must be added as a collaborator on sschuez/thinklink first — see SETUP.md step 0."
+else
+  warn "skipping login check until gh is installed"
+fi
+
+# ---------------------------------------------------------------------------
+say "Ruby $RUBY_REQ"
+RUBY_OK=0
+if have ruby; then
+  CUR="$(ruby -e 'print RUBY_VERSION' 2>/dev/null)"
+  case "$CUR" in
+    ${RUBY_REQ}.*) ok "ruby $CUR"; RUBY_OK=1 ;;
+    *) warn "ruby $CUR found, but $RUBY_REQ.x is expected" ;;
+  esac
+fi
+if [ "$RUBY_OK" -eq 0 ]; then
+  if have mise; then
+    warn "installing ruby $RUBY_REQ via mise…"
+    mise install "ruby@$RUBY_REQ" >/dev/null 2>&1 && mise use -g "ruby@$RUBY_REQ" >/dev/null 2>&1 \
+      && ok "ruby $RUBY_REQ installed via mise" && RUBY_OK=1 \
+      || action "Run 'mise install ruby@$RUBY_REQ && mise use -g ruby@$RUBY_REQ' then re-run."
+  elif have rbenv; then
+    action "With rbenv: 'rbenv install $RUBY_REQ.x && rbenv global $RUBY_REQ.x' then re-run."
+  elif [ "$OS" = "Darwin" ] && have brew; then
+    action "Install a Ruby manager: 'brew install mise' then re-run (it'll install Ruby $RUBY_REQ for you)."
+  else
+    action "Install Ruby $RUBY_REQ (via mise/asdf/rbenv) then re-run."
+  fi
+fi
+
+# ---------------------------------------------------------------------------
+say "Network sanity (rare IPv6 issue that stalls 'bundle install')"
+if have curl; then
+  if curl -6 -s -o /dev/null --max-time 5 https://rubygems.org/ 2>/dev/null; then
+    ok "IPv6 reachable"
+  elif curl -4 -s -o /dev/null --max-time 5 https://rubygems.org/ 2>/dev/null; then
+    warn "IPv6 to rubygems.org is not responding but IPv4 is. If 'bundle install' hangs on 'Fetching source index', this is why — use a network with working IPv6 (see SETUP.md). Continuing on IPv4."
+  else
+    warn "could not reach rubygems.org — check the internet connection."
+  fi
+fi
+
+# ---------------------------------------------------------------------------
+say "Project gems (Jekyll + link checker)"
+if [ "$RUBY_OK" -eq 1 ] && have bundle; then
+  if bundle check >/dev/null 2>&1; then
+    ok "gems already installed"
+  else
+    warn "running 'bundle install'… (first run can take a couple of minutes)"
+    if bundle install >/tmp/thinklink_bundle.log 2>&1; then
+      ok "gems installed"
+    else
+      bad "bundle install failed — see /tmp/thinklink_bundle.log"
+      tail -n 8 /tmp/thinklink_bundle.log | sed 's/^/      /'
+      action "Fix the bundle error above (often: missing C toolchain, or the IPv6 issue) then re-run."
+    fi
+  fi
+elif [ "$RUBY_OK" -eq 1 ] && ! have bundle; then
+  gem install bundler >/dev/null 2>&1 && ok "bundler installed" || action "Run 'gem install bundler' then re-run."
+else
+  warn "skipping gem install until Ruby $RUBY_REQ is in place"
+fi
+
+# ---------------------------------------------------------------------------
+say "Build check"
+if [ "$RUBY_OK" -eq 1 ] && have bundle && bundle check >/dev/null 2>&1; then
+  if bundle exec jekyll build >/dev/null 2>&1; then
+    ok "site builds"
+    if bundle exec htmlproofer ./_site --disable-external --allow-hash-href >/dev/null 2>&1; then
+      ok "links and images check out"
+    else
+      warn "link check reported issues — run 'bundle exec htmlproofer ./_site --disable-external --allow-hash-href' to see them"
+    fi
+  else
+    bad "jekyll build failed — run 'bundle exec jekyll build' to see the error"
+  fi
+else
+  warn "skipping build check until gems are installed"
+fi
+
+# ---------------------------------------------------------------------------
+say "Summary"
+if [ "${#ACTIONS[@]}" -eq 0 ]; then
+  printf "  🎉 This machine is ready. Open this folder in Claude Code and you can start editing — see HOW-TO.md.\n\n"
+  exit 0
+else
+  printf "  %d thing(s) need a human before this machine is ready:\n" "${#ACTIONS[@]}"
+  for a in "${ACTIONS[@]}"; do printf "    • %s\n" "$a"; done
+  printf "\n  Do those, then run ./script/setup again.\n\n"
+  exit 1
+fi

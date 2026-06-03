@@ -58,7 +58,13 @@ bundle exec jekyll build                                          # Liquid / inc
 bundle exec htmlproofer ./_site --disable-external --allow-hash-href   # dead internal links, anchors, missing images
 ```
 
-External-link checking is intentionally off (fast, offline, no third-party requests). The same proof runs in the deploy workflow and **blocks publishing** if it fails. Repo docs (`README.md`, `CLAUDE.md`, `HOW-TO.md`) are listed under `exclude:` in `_config.yml` so they're never published — add any new non-page file there too.
+External-link checking is intentionally off (fast, offline, no third-party requests). The same proof runs in the deploy workflow and **blocks publishing** if it fails. Repo docs (`README.md`, `CLAUDE.md`, `HOW-TO.md`, `SETUP.md`) are listed under `exclude:` in `_config.yml` so they're never published — add any new non-page file there too.
+
+## Documentation map
+
+- **`HOW-TO.md`** — for non-coders editing content via Claude Code (bilingual). The daily workflow: ask → preview → approve → publish.
+- **`SETUP.md`** — for the technical owner: one-time per-machine setup (Ruby, GitHub access, Claude Code) and a "when it breaks" guide.
+- **`CLAUDE.md`** — guidance for the assistant working in this repo.
 
 ## Fonts
 
