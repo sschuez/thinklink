@@ -13,7 +13,9 @@ bundle install            # one-time
 bundle exec jekyll serve  # http://localhost:4000
 ```
 
-There is no separate lint / test command — `jekyll build` is the only check (`bundle exec jekyll build` from CI's perspective). Liquid errors and broken includes surface here.
+The local preview lives at **http://localhost:4000/** (English at `http://localhost:4000/en/`). Do **not** append `/thinklink/` — that path only exists in the production Pages build (`--baseurl /thinklink`); locally the dev server serves from the root and `/thinklink/` 404s. When handing a preview link to someone who isn't reading the code, give them the bare root URL.
+
+Two checks, both run locally and in CI: `bundle exec jekyll build` (Liquid errors, broken includes and bad front matter surface here) and `bundle exec htmlproofer ./_site --disable-external --allow-hash-href` (dead internal links, broken anchors, missing images — things the build alone misses). External-link checking is off on purpose: it keeps the check fast, offline, and free of third-party requests. The same proof runs in `.github/workflows/jekyll.yml` and **blocks the deploy** if it fails.
 
 ## Deployment
 
@@ -21,15 +23,16 @@ GitHub Pages, driven by `.github/workflows/jekyll.yml`. On push to `main`, the w
 
 ## Working with this repo from a prompt
 
-Assume the person prompting is not reading the diff and not running anything locally — they want a working website. Default workflow for any prompted change:
+Assume the person prompting is not reading the diff and not running anything locally — they want a working website, and they want to **see and approve** a change before it goes public. Default workflow for any prompted content change:
 
-1. **Make the change.** Edit only what the request asks for. Don't refactor surrounding code.
-2. **Verify it builds.** `bundle exec jekyll build --baseurl /thinklink` should finish without warnings.
-3. **Commit.** Subject line ~50 chars, plain language ("Update president bio", "Add 2027 conference to activities", "Fix typo in Datenschutz"). **Never mention Claude or AI in commit messages** (see `~/.claude/CLAUDE.md`).
-4. **Push to `main`.** The workflow does the rest. The change is live at https://sschuez.github.io/thinklink/ in about a minute.
-5. **Tell the user** what changed, where to look, and roughly when it'll be live.
+1. **Make the change.** Edit only what the request asks for. Don't refactor surrounding code. Mirror DE/EN.
+2. **Verify it builds and links resolve.** Run `bundle exec jekyll build`, then `bundle exec htmlproofer ./_site --disable-external --allow-hash-href`. Both must pass. **If either fails, fix the cause and re-run until green — do not preview or publish a red build.** Common fixes: repair the broken link or anchor, restore the missing image, or add a new non-page file (e.g. a new `*.md` doc) to `exclude:` in `_config.yml` so it isn't published. State plainly what failed and what you changed.
+3. **Preview.** Make sure `bundle exec jekyll serve` is running (start it in the background if not) and hand the user the local link — `http://localhost:4000/` for DE, `http://localhost:4000/en/` for EN — pointing at the exact page/section that changed. If they're not on this machine (e.g. driving from claude.ai/code, where `localhost` won't reach them), describe precisely what changed and show the relevant snippet instead.
+4. **Ask before publishing.** Proactively ask, in the user's language, whether to publish — e.g. "Soll ich das jetzt veröffentlichen?" / "Publish this now?" Do **not** commit or push until they confirm. If they want tweaks, iterate on the preview and ask again.
+5. **Publish on confirmation.** Commit (subject ~50 chars, plain language — "Update president bio", "Add 2027 conference to activities", "Fix typo in Datenschutz"; **never mention Claude or AI**, see `~/.claude/CLAUDE.md`) and push to `main`. The workflow does the rest — live at https://sschuez.github.io/thinklink/ in about a minute.
+6. **Tell the user** it's published, where to look, and roughly when it'll be live.
 
-For routine content edits (text, dates, names, new sections, new pages), proceed end-to-end without asking for confirmation. **Ask first** before:
+The preview + confirm step is the default for content edits. If the user says something like "just publish this directly," skip the preview/ask for that one change. **Ask first** before:
 - Adding any third-party request (analytics, embedded video, externally hosted assets) — this breaks the no-banner privacy posture and requires updating `datenschutz.html` and `en/privacy.html`.
 - Adding gems, JS libraries or build steps — the site's lightness is a feature.
 - Changing the deploy workflow or Pages settings.

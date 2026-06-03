@@ -13,21 +13,38 @@ publishes it. Diese Seite ist für **Nicht-Techniker:innen** gedacht.
 1. Öffne **Claude Code** in diesem Projektordner (`thinklink`) — entweder im Terminal,
    in der Claude-Desktop-App oder auf [claude.ai/code](https://claude.ai/code).
 2. Schreib in normalem Deutsch (oder Englisch), was du geändert haben möchtest.
-3. Fertig. Der Assistent ändert die Datei(en), prüft, dass die Website noch baut,
-   und veröffentlicht die Änderung.
+3. Der Assistent ändert die Datei(en) und prüft, dass die Website noch baut.
 
-Du musst **nichts** speichern, committen oder hochladen — das passiert automatisch.
+### Vorschau ansehen und veröffentlichen
 
-### Was danach passiert
+Nichts geht online, bevor du es gesehen und freigegeben hast. Vor der Vorschau prüft
+der Assistent automatisch, dass die Website baut und alle Links und Bilder
+funktionieren — falls etwas kaputt ist, wird es zuerst repariert. Der Ablauf:
 
-- Die Änderung ist nach **ca. 1 Minute** live unter
-  **https://sschuez.github.io/thinklink/**
-- Die Website ist zweisprachig. Wenn du etwas auf der deutschen Seite änderst,
-  wird die englische Seite automatisch mitgepflegt (und umgekehrt).
+1. **Vorschau.** Der Assistent startet eine lokale Vorschau und gibt dir einen Link —
+   **<http://localhost:4000/>** (Englisch: **<http://localhost:4000/en/>**) — und sagt dir,
+   wo genau du hinschauen musst. Diese Vorschau ist **nur für dich**, noch nicht
+   öffentlich. _(Funktioniert, wenn Claude Code auf deinem Rechner läuft. Wenn nicht,
+   beschreibt dir der Assistent stattdessen genau, was sich geändert hat.)_
+2. **Freigabe.** Der Assistent fragt dich proaktiv: _„Soll ich das jetzt
+   veröffentlichen?“_ Erst wenn du **Ja** sagst, geht es online. Möchtest du vorher
+   noch etwas anpassen, sag es einfach — die Vorschau wird aktualisiert und du wirst
+   erneut gefragt.
+3. **Live.** Nach deinem „Ja“ ist die Änderung in **ca. 1 Minute** live unter
+   **<https://sschuez.github.io/thinklink/>**
+
+Du musst nichts speichern, committen oder hochladen — du schaust dir die Vorschau an
+und sagst „veröffentlichen“.
+
+Die Website ist zweisprachig: Wenn du etwas auf der deutschen Seite änderst, wird die
+englische Seite automatisch mitgepflegt (und umgekehrt).
+
+> **Tipp:** Kleine Korrekturen kannst du ohne Vorschau direkt online stellen lassen —
+> sag einfach „Veröffentliche das direkt.“
 
 ### Prüfen, ob es live ist
 
-Öffne https://sschuez.github.io/thinklink/ und lade die Seite neu
+Öffne <https://sschuez.github.io/thinklink/> und lade die Seite neu
 (am besten mit `Cmd`+`Shift`+`R`, damit nichts aus dem Cache kommt).
 Wenn du nach ~1 Minute noch nichts siehst, frag einfach: „Ist die Änderung schon live?“
 
@@ -60,21 +77,35 @@ Datenschutzerklärung anpassen oder doch ein Cookie-Banner ergänzen).
 1. Open **Claude Code** in this project folder (`thinklink`) — in the terminal,
    the Claude desktop app, or at [claude.ai/code](https://claude.ai/code).
 2. Write, in plain English (or German), what you want changed.
-3. That's it. The assistant edits the file(s), checks the site still builds,
-   and publishes the change.
+3. The assistant edits the file(s) and checks the site still builds.
 
-You never have to save, commit, or upload anything — that happens automatically.
+### Preview, then publish
 
-### What happens next
+Nothing goes public until you've seen it and approved it. Before showing you the
+preview, the assistant automatically checks that the site builds and that every link
+and image works — if something's broken, it's fixed first. The flow:
 
-- The change is live in **about 1 minute** at
-  **https://sschuez.github.io/thinklink/**
-- The site is bilingual. Change something on the German page and the English page
-  is kept in sync automatically (and vice versa).
+1. **Preview.** The assistant starts a local preview and gives you a link —
+   **<http://localhost:4000/>** (English: **<http://localhost:4000/en/>**) — and tells you
+   exactly where to look. This preview is **for your eyes only**, not yet public.
+   _(Works when Claude Code is running on your machine. If it isn't, the assistant
+   describes precisely what changed instead.)_
+2. **Approve.** The assistant proactively asks: _"Shall I publish this now?"_ Nothing
+   goes online until you say **yes**. Want a tweak first? Just say so — the preview
+   updates and you're asked again.
+3. **Live.** After your "yes," the change is live in **about 1 minute** at
+   **<https://sschuez.github.io/thinklink/>**
+
+You never save, commit, or upload anything — you look at the preview and say "publish."
+
+The site is bilingual: change something on the German page and the English page is
+kept in sync automatically (and vice versa).
+
+> **Tip:** For small fixes you can skip the preview — just say "Publish this directly."
 
 ### Checking it's live
 
-Open https://sschuez.github.io/thinklink/ and reload
+Open <https://sschuez.github.io/thinklink/> and reload
 (use `Cmd`+`Shift`+`R` to bypass the cache).
 If nothing has changed after ~1 minute, just ask: "Is the change live yet?"
 
@@ -100,5 +131,5 @@ privacy page, or having to add a cookie banner after all).
 
 ---
 
-*Technical details (build, deploy, structure) live in `README.md`. Guidance for the
-assistant lives in `CLAUDE.md`.*
+_Technical details (build, deploy, structure) live in `README.md`. Guidance for the
+assistant lives in `CLAUDE.md`._

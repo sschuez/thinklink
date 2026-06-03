@@ -49,6 +49,17 @@ bundle exec jekyll serve  # http://localhost:4000
 
 The `bundle install` step needs Ruby (macOS ships it; otherwise install via Homebrew or `mise` / `asdf`). After that, only `jekyll serve` is needed for day-to-day work.
 
+### Checks
+
+Two checks guard every change, run locally and in CI:
+
+```
+bundle exec jekyll build                                          # Liquid / include / front-matter errors
+bundle exec htmlproofer ./_site --disable-external --allow-hash-href   # dead internal links, anchors, missing images
+```
+
+External-link checking is intentionally off (fast, offline, no third-party requests). The same proof runs in the deploy workflow and **blocks publishing** if it fails. Repo docs (`README.md`, `CLAUDE.md`, `HOW-TO.md`) are listed under `exclude:` in `_config.yml` so they're never published — add any new non-page file there too.
+
 ## Fonts
 
 The site self-hosts **Newsreader** (serif) and **Public Sans** (sans) — one `.woff2` per used weight, committed under `assets/fonts/` and referenced from `assets/css/tokens.css`. Nothing is fetched from Google at runtime, which is what keeps the site cookie-banner-free. See `assets/fonts/README.md` to refresh the bundle. If a file were absent, the browser falls back to the system serif / sans stack and the site still renders.
