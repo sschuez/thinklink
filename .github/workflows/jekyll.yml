@@ -10,12 +10,6 @@ permissions:
   pages: write
   id-token: write
 
-# Run the JavaScript-based actions on Node.js 24. They still declare Node 20, which
-# GitHub is deprecating; this opts in early (GitHub's documented mechanism) without
-# changing action versions, so the matched Pages upload/deploy pair stays compatible.
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -25,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -36,7 +30,7 @@ jobs:
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Build with Jekyll
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
@@ -47,7 +41,7 @@ jobs:
         run: bundle exec htmlproofer ./_site --disable-external --allow-hash-href --swap-urls "^${{ steps.pages.outputs.base_path }}:"
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
 
   deploy:
     needs: build
