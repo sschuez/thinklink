@@ -13,12 +13,12 @@ publishes it. Diese Seite ist für **Nicht-Techniker:innen** gedacht.
 1. Öffne **Claude Code** in diesem Projektordner (`thinklink`) — entweder im Terminal,
    in der Claude-Desktop-App oder auf [claude.ai/code](https://claude.ai/code).
 2. Schreib in normalem Deutsch (oder Englisch), was du geändert haben möchtest.
-3. Der Assistent ändert die Datei(en) und prüft, dass die Website noch baut.
+3. Der Assistent ändert die Datei(en) und prüft, dass die Website noch ohne Fehler lädt.
 
 ### Vorschau ansehen und veröffentlichen
 
 Nichts geht online, bevor du es gesehen und freigegeben hast. Vor der Vorschau prüft
-der Assistent automatisch, dass die Website baut und alle Links und Bilder
+der Assistent automatisch, dass die Website lädt und alle Links und Bilder
 funktionieren — falls etwas kaputt ist, wird es zuerst repariert. Der Ablauf:
 
 1. **Vorschau.** Der Assistent startet eine lokale Vorschau und gibt dir einen Link —
