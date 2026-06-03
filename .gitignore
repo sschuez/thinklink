@@ -10,6 +10,9 @@
 *.swo
 *~
 
+# Claude Code — personal, machine-specific settings (shared config like launch.json is committed)
+.claude/settings.local.json
+
 # Node (in case tooling is added later)
 node_modules/
 npm-debug.log*
