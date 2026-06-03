@@ -6,6 +6,63 @@ publishes it. Diese Seite ist für **Nicht-Techniker:innen** gedacht.
 
 ---
 
+## Erste Einrichtung (nur einmal pro Computer)
+
+Diese Schritte machst du **einmal**, wenn du auf einem neuen Computer beginnst. Danach
+brauchst du sie nie wieder. Du brauchst **keine** Programmier- oder GitHub-Kenntnisse —
+fast alles erledigt der Assistent für dich. Bleib einfach Schritt für Schritt dran, und
+wenn du irgendwo nicht weiterkommst, frag die für die Website verantwortliche Person
+(siehe `SETUP.md`).
+
+### Schritt 1 — GitHub-Konto erstellen und Zugang erhalten
+
+GitHub ist der Ort, an dem die Website gespeichert wird. Damit du veröffentlichen darfst,
+brauchst du ein Konto und eine Freigabe.
+
+1. Öffne <https://github.com/signup> und erstelle ein kostenloses Konto.
+2. Merke dir deinen **Benutzernamen** (username).
+3. Schicke diesen Benutzernamen an die für die Website verantwortliche Person. Sie gibt
+   dir die Schreibrechte.
+4. Du bekommst eine **Einladung per E-Mail** (oder auf github.com oben rechts bei der
+   Glocke). Klicke darin auf **Accept invitation** / **Einladung annehmen**.
+
+### Schritt 2 — Claude-App herunterladen und anmelden
+
+1. Öffne <https://claude.ai/download> und lade die App für deinen Computer herunter
+   (macOS oder Windows).
+2. Installiere sie wie jedes andere Programm: heruntergeladene Datei öffnen und den
+   Anweisungen folgen.
+3. Starte Claude und melde dich an (oder erstelle dort ein Konto, falls nötig).
+
+### Schritt 3 — Die Website auf deinen Computer holen (das macht der Assistent)
+
+Ab hier übernimmt der Assistent. Du tippst nur und bestätigst hin und wieder ein Fenster.
+
+1. Erstelle auf deinem Computer einen leeren Ordner, z. B. `ThinkLink` in deinen
+   **Dokumenten**.
+2. Öffne in der Claude-App den **Code-/Projekt-Bereich** (Claude Code) und wähle diesen
+   Ordner als Arbeitsort aus. *(Wenn du den Bereich nicht findest, frag den Assistenten:
+   „Wie öffne ich hier ein Projekt?“)*
+3. Schreib dem Assistenten:
+   > „Bitte hole die ThinkLink-Website von https://github.com/sschuez/thinklink auf
+   > diesen Computer und richte alles ein.“
+4. Der Assistent lädt die Website herunter und installiert die nötigen Programme. Dabei
+   bittet er dich evtl. um Folgendes — folge einfach den Hinweisen am Bildschirm:
+   - ein **Installationsfenster bestätigen** (auf dem Mac z. B. „Befehlszeilentools“);
+   - dein **Computer-Passwort eingeben** (für Installationen — das ist normal);
+   - dich **bei GitHub anmelden**: Es öffnet sich ein Browserfenster — dort mit deinem
+     GitHub-Konto anmelden und bestätigen.
+5. Falls der Assistent dich bittet, den Ordner **`thinklink`** zu öffnen (er entsteht
+   beim Herunterladen), tu das im Code-/Projekt-Bereich — und schreib dann:
+   „Richte diesen Computer ein.“
+6. Wenn der Assistent meldet, dass alles **bereit** ist, bist du fertig. 🎉
+
+> **Beim nächsten Mal** brauchst du diese Einrichtung nicht mehr: Du öffnest einfach die
+> Claude-App, öffnest den **ThinkLink-Ordner**, und schreibst, was du ändern möchtest
+> (siehe unten). Der Assistent prüft beim Start kurz selbst, ob alles bereit ist.
+
+---
+
 ## Deutsch
 
 ### So machst du eine Änderung

@@ -8,6 +8,11 @@ Static homepage for the ThinkLink Association — a non-profit Swiss Verein base
 
 ## Setting up a new machine
 
+If the repository isn't on the machine yet (the user is starting from an empty folder
+and asks you to "fetch"/"download" the website), first clone it —
+`git clone https://github.com/sschuez/thinklink` (install git if the OS prompts for it)
+— then open the resulting `thinklink` folder as the working directory before continuing.
+
 If the person is setting this up on a fresh machine (or anything below fails), run the
 setup script instead of installing by hand — `./script/setup` on macOS/Linux,
 `powershell -ExecutionPolicy Bypass -File script/setup.ps1` on Windows. It's a
