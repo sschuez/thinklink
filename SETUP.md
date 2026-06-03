@@ -30,6 +30,11 @@ it **can't** do for you is grant GitHub access — that's step 0 below, done onc
 person from the repo settings. The rest of this page is the manual reference behind the
 script and the troubleshooting guide.
 
+Every script here is **idempotent** — safe to run any number of times. They check before
+they act and only install what's missing, so re-running a fully-set-up machine changes
+nothing. Claude also runs a fast read-only readiness check (`./script/check`) at the
+start of each editing session and won't start editing until the machine reports ready.
+
 ---
 
 ## 0. GitHub access (do this once, per person)

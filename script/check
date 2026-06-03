@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# Fast, read-only readiness check: is this machine ready to edit and publish?
+# Installs and changes NOTHING. Exit 0 = ready, exit 1 = not ready (run ./script/setup).
+#
+# Claude runs this once at the start of a session, before the first edit.
+#
+#   ./script/check
+#
+set -uo pipefail
+cd "$(dirname "$0")/.." || exit 1
+
+RUBY_REQ="3.3"
+READY=1
+chk() {
+  if eval "$2" >/dev/null 2>&1; then
+    printf "  ✅ %s\n" "$1"
+  else
+    printf "  ❌ %s\n" "$1"
+    READY=0
+  fi
+}
+
+echo "Readiness check (read-only):"
+chk "git installed"          "command -v git"
+chk "GitHub CLI installed"   "command -v gh"
+chk "GitHub login active"    "gh auth status"
+chk "Ruby ${RUBY_REQ} active" "ruby -e 'exit RUBY_VERSION.start_with?(\"${RUBY_REQ}.\")'"
+chk "project gems installed" "bundle check"
+chk "site builds"            "bundle exec jekyll build"
+
+if [ "$READY" -eq 1 ]; then
+  echo "READY — this machine can edit and publish."
+  exit 0
+else
+  echo "NOT READY — run ./script/setup to fix the ❌ items above, then start editing."
+  exit 1
+fi

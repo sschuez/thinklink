@@ -35,7 +35,11 @@ GitHub Pages, driven by `.github/workflows/jekyll.yml`. On push to `main`, the w
 
 ## Working with this repo from a prompt
 
-Assume the person prompting is not reading the diff and not running anything locally — they want a working website, and they want to **see and approve** a change before it goes public. Default workflow for any prompted content change:
+Assume the person prompting is not reading the diff and not running anything locally — they want a working website, and they want to **see and approve** a change before it goes public.
+
+**Session preflight — do this before the first edit of a session.** Run `./script/check` (macOS/Linux) or `powershell -ExecutionPolicy Bypass -File script/check.ps1` (Windows) to confirm the machine is ready. If it prints `NOT READY`, **do not start editing** — run the setup script (`./script/setup` / `script/setup.ps1`), walk the user through any `ACTION NEEDED` items in their language, and re-run until ready. Run the check once per session; skip it for later edits in the same session.
+
+Default workflow for any prompted content change:
 
 1. **Sync first.** Before editing, run `git pull --rebase --autostash origin main` so this machine has the latest — several people edit this site from different machines, and working on a stale tree causes rejected pushes and conflicts later. (`--autostash` makes this safe to run even if edits are already in progress.) If the pull reports a conflict (rare — two people changed the same lines), resolve it only when the intent is unambiguous; otherwise stop and explain the clash to the user in their language and ask how to proceed.
 2. **Make the change.** Edit only what the request asks for. Don't refactor surrounding code. Mirror DE/EN.

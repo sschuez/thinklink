@@ -10,6 +10,12 @@ permissions:
   pages: write
   id-token: write
 
+# Run the JavaScript-based actions on Node.js 24. They still declare Node 20, which
+# GitHub is deprecating; this opts in early (GitHub's documented mechanism) without
+# changing action versions, so the matched Pages upload/deploy pair stays compatible.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 concurrency:
   group: pages
   cancel-in-progress: false
