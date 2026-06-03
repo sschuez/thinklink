@@ -1,8 +1,8 @@
-# Änderungen an der Website machen / Editing the website
+# Änderungen an der Website machen
 
-This page is for **non-coders**. You do not need to understand HTML, Git or Jekyll.
-You describe the change in plain words, and the assistant makes it, checks it, and
-publishes it. Diese Seite ist für **Nicht-Techniker:innen** gedacht.
+Diese Seite ist für **Nicht-Techniker:innen** gedacht. Du brauchst kein HTML, kein Git
+und kein Jekyll zu verstehen: Du beschreibst die Änderung in normalen Worten, und der
+Assistent setzt sie um, prüft sie und veröffentlicht sie.
 
 ---
 
@@ -63,7 +63,7 @@ Ab hier übernimmt der Assistent. Du tippst nur und bestätigst hin und wieder e
 
 ---
 
-## Deutsch
+## Inhalte ändern und veröffentlichen
 
 ### So machst du eine Änderung
 
@@ -129,68 +129,5 @@ Datenschutzerklärung anpassen oder doch ein Cookie-Banner ergänzen).
 
 ---
 
-## English
-
-### How to make a change
-
-1. Open **Claude Code** in this project folder (`thinklink`) — in the terminal,
-   the Claude desktop app, or at [claude.ai/code](https://claude.ai/code).
-2. Write, in plain English (or German), what you want changed.
-3. The assistant edits the file(s) and checks the site still builds.
-
-### Preview, then publish
-
-Nothing goes public until you've seen it and approved it. Before showing you the
-preview, the assistant automatically checks that the site builds and that every link
-and image works — if something's broken, it's fixed first. If a colleague changed
-something in the meantime, the assistant pulls their latest version first, so your
-edits don't overwrite each other. The flow:
-
-1. **Preview.** The assistant starts a local preview and gives you a link —
-   **<http://localhost:4000/>** (English: **<http://localhost:4000/en/>**) — and tells you
-   exactly where to look. This preview is **for your eyes only**, not yet public.
-   _(Works when Claude Code is running on your machine. If it isn't, the assistant
-   describes precisely what changed instead.)_
-2. **Approve.** The assistant proactively asks: _"Shall I publish this now?"_ Nothing
-   goes online until you say **yes**. Want a tweak first? Just say so — the preview
-   updates and you're asked again.
-3. **Live.** After your "yes," the change is live in **about 1 minute** at
-   **<https://sschuez.github.io/thinklink/>**
-
-You never save, commit, or upload anything — you look at the preview and say "publish."
-
-The site is bilingual: change something on the German page and the English page is
-kept in sync automatically (and vice versa).
-
-> **Tip:** For small fixes you can skip the preview — just say "Publish this directly."
-
-### Checking it's live
-
-Open <https://sschuez.github.io/thinklink/> and reload
-(use `Cmd`+`Shift`+`R` to bypass the cache).
-If nothing has changed after ~1 minute, just ask: "Is the change live yet?"
-
-### Example requests
-
-- "Change the president's bio to the following text: …"
-- "Add the 2027 conference to the activities list."
-- "Fix the typo in the imprint: 'Zürch' should be 'Zürich'."
-- "Create a new page called 'Membership' (German and English)."
-- "Replace the team photo with the file I just uploaded."
-
-### Please ask first — don't just request
-
-These change the site's **privacy posture** (it currently needs **no** cookie
-banner). Raise them rather than requesting them outright:
-
-- Adding Google Analytics or any other stats/tracking tool
-- Embedding a YouTube/Vimeo video or a Google Maps map
-- Adding social-media buttons, externally hosted fonts, or other third-party content
-
-The assistant will pause and explain what would be required (e.g. updating the
-privacy page, or having to add a cookie banner after all).
-
----
-
-_Technical details (build, deploy, structure) live in `README.md`. Guidance for the
-assistant lives in `CLAUDE.md`._
+_Technische Details (Build, Deployment, Aufbau) stehen in `README.md`. Hinweise für den
+Assistenten in `CLAUDE.md`._
