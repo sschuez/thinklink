@@ -90,13 +90,7 @@ If you add anything that issues a third-party request (analytics, maps embed, so
 
 ## Fonts
 
-The `@font-face` declarations in `tokens.css` point at:
-
-- `assets/fonts/Newsreader.woff2`
-- `assets/fonts/Newsreader-Italic.woff2`
-- `assets/fonts/PublicSans.woff2`
-
-The files themselves are not in the repo. See `assets/fonts/README.md` for where to get them. Missing files cause a fallback to the system serif / sans stack — site still renders.
+Self-hosted and committed to the repo under `assets/fonts/` — one `.woff2` per weight actually used (e.g. `Newsreader-400.woff2`, `Newsreader-400-Italic.woff2`, `PublicSans-500.woff2`). The `@font-face` declarations in `tokens.css` reference these by the `Family-Weight[-Italic].woff2` pattern. No request to `fonts.googleapis.com` / `fonts.gstatic.com` at runtime — this is what keeps the site cookie-banner-free, so keep fonts self-hosted. See `assets/fonts/README.md` to refresh the bundle. If a file were missing, the browser falls back to the system serif / sans stack and the site still renders.
 
 ## Adding a new page
 

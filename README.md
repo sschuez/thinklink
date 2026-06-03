@@ -51,7 +51,7 @@ The `bundle install` step needs Ruby (macOS ships it; otherwise install via Home
 
 ## Fonts
 
-The site references `assets/fonts/Newsreader.woff2`, `Newsreader-Italic.woff2`, and `PublicSans.woff2`. They're not in the repo — see `assets/fonts/README.md` for the simplest way to fetch them (Google Webfonts Helper). If the files are absent, the browser falls back to the system serif / sans stack and the site still renders.
+The site self-hosts **Newsreader** (serif) and **Public Sans** (sans) — one `.woff2` per used weight, committed under `assets/fonts/` and referenced from `assets/css/tokens.css`. Nothing is fetched from Google at runtime, which is what keeps the site cookie-banner-free. See `assets/fonts/README.md` to refresh the bundle. If a file were absent, the browser falls back to the system serif / sans stack and the site still renders.
 
 ## Deploying to GitHub Pages
 
