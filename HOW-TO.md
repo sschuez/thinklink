@@ -4,6 +4,10 @@ Diese Seite ist für **Nicht-Techniker:innen** gedacht. Du brauchst kein HTML, k
 und kein Jekyll zu verstehen: Du beschreibst die Änderung in normalen Worten, und der
 Assistent setzt sie um, prüft sie und veröffentlicht sie.
 
+> **Ganz neu und die Website ist noch nicht auf deinem Computer?** Dann fang mit
+> **`START-HERE.md`** an — die bringt dich vom leeren Computer bis hierher. Diese Seite
+> hier brauchst du erst danach.
+
 ---
 
 ## Erste Einrichtung (nur einmal pro Computer)
@@ -38,23 +42,26 @@ brauchst du ein Konto und eine Freigabe.
 
 Ab hier übernimmt der Assistent. Du tippst nur und bestätigst hin und wieder ein Fenster.
 
-1. Erstelle auf deinem Computer einen leeren Ordner, z. B. `ThinkLink` in deinen
-   **Dokumenten**.
-2. Öffne in der Claude-App den **Code-/Projekt-Bereich** (Claude Code) und wähle diesen
-   Ordner als Arbeitsort aus. *(Wenn du den Bereich nicht findest, frag den Assistenten:
-   „Wie öffne ich hier ein Projekt?“)*
-3. Schreib dem Assistenten:
-   > „Bitte hole die ThinkLink-Website von https://github.com/sschuez/thinklink auf
-   > diesen Computer und richte alles ein.“
+1. Lege auf deinem Computer einen **leeren Ordner** an, z. B. `ThinkLink` in deinen
+   **Dokumenten**. *(Mac: Finder → Dokumente → Rechtsklick → „Neuer Ordner“. Windows:
+   Explorer → Dokumente → Rechtsklick → „Neu → Ordner“.)* Dass er leer ist, ist richtig.
+   *(Hast du schon einen ThinkLink-Ordner von früher? Dann darf der neue, leere Ordner
+   auch darin liegen — Hauptsache, der ausgewählte Ordner ist leer.)*
+2. Öffne die **Claude-App**, klicke oben in der Mitte auf **Code**, dann auf
+   **Select folder** / **Ordner auswählen**, und wähle den eben erstellten Ordner.
+   *(Modell ist egal; bei den Berechtigungen die Voreinstellung „Nachfragen“ / „Ask“
+   stehen lassen.)*
+3. Kopiere diesen Satz ins Eingabefeld:
+   > „Bitte hole die ThinkLink-Website von https://github.com/sschuez/thinklink in diesen
+   > Ordner, installiere alles Nötige und folge danach der Anleitung in HOW-TO.md.“
 4. Der Assistent lädt die Website herunter und installiert die nötigen Programme. Dabei
    bittet er dich evtl. um Folgendes — folge einfach den Hinweisen am Bildschirm:
    - ein **Installationsfenster bestätigen** (auf dem Mac z. B. „Befehlszeilentools“);
    - dein **Computer-Passwort eingeben** (für Installationen — das ist normal);
    - dich **bei GitHub anmelden**: Es öffnet sich ein Browserfenster — dort mit deinem
      GitHub-Konto anmelden und bestätigen.
-5. Falls der Assistent dich bittet, den Ordner **`thinklink`** zu öffnen (er entsteht
-   beim Herunterladen), tu das im Code-/Projekt-Bereich — und schreib dann:
-   „Richte diesen Computer ein.“
+5. Falls der Assistent dich bittet, den neu entstandenen Unterordner **`thinklink`** zu
+   öffnen, klicke oben wieder auf **Select folder** und wähle ihn aus.
 6. Wenn der Assistent meldet, dass alles **bereit** ist, bist du fertig. 🎉
 
 > **Beim nächsten Mal** brauchst du diese Einrichtung nicht mehr: Du öffnest einfach die

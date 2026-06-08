@@ -1,5 +1,9 @@
 # ThinkLink Association — Homepage
 
+> **Du möchtest die Website bearbeiten und kennst dich technisch nicht aus?**
+> Fang bei **[START-HERE.md](START-HERE.md)** an — die führt dich vom leeren Computer
+> Schritt für Schritt bis zur ersten Änderung. (Alltägliche Änderungen: [HOW-TO.md](HOW-TO.md).)
+
 Static site for the ThinkLink Association. German + English, built with **Jekyll** so that the header, footer and `<head>` aren't duplicated across pages. Jekyll runs on GitHub Pages natively — pushing to `main` is enough to deploy.
 
 ## Stack
