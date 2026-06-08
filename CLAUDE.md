@@ -55,7 +55,7 @@ Default workflow for any prompted content change:
 7. **Tell the user** it's published, where to look, and roughly when it'll be live.
 
 The preview + confirm step is the default for content edits. If the user says something like "just publish this directly," skip the preview/ask for that one change. **Ask first** before:
-- Adding any third-party request (analytics, embedded video, externally hosted assets) — this breaks the no-banner privacy posture and requires updating `datenschutz.html` and `en/privacy.html`.
+- Adding any third-party request (analytics, embedded video, externally hosted assets) — this breaks the no-banner privacy posture and requires updating `datenschutz.html` and `en/privacy.html`. Follow the **Cookie-banner watch** action plan under *Privacy / Swiss compliance* below.
 - Adding gems, JS libraries or build steps — the site's lightness is a feature.
 - Changing the deploy workflow or Pages settings.
 
@@ -109,9 +109,22 @@ The site is deliberately built to require **no cookie banner** under revFADP:
 - No cookies set by the site.
 - No analytics, no tag managers, no embeds.
 - Fonts are self-hosted — no request to `fonts.googleapis.com` / `fonts.gstatic.com`.
-- The only processing disclosed in `datenschutz.html` is GitHub Pages server logs and the U.S. transfer (covered by SCCs + DPF).
+- The only processing disclosed in `datenschutz.html` is GitHub Pages + Fastly server logs and the U.S. transfer (covered by SCCs + DPF).
 
-If you add anything that issues a third-party request (analytics, maps embed, social embed, externally hosted font/CDN), the cookie-banner-free status no longer holds. Update `datenschutz.html` and `en/privacy.html` accordingly.
+The site addresses an international audience (focus: CH, EU, UK, Türkei, Indien — see the "Zielpublikum" section in `datenschutz.html` / `en/privacy.html`). That worldwide reach does **not** by itself require a banner: the consent rules turn on whether something is stored on or read from the visitor's device, which today nothing does.
+
+### Cookie-banner watch — standing instruction
+
+The no-banner posture holds **only** as long as the site stores/reads nothing on the device and loads no third-party content. This is not a one-time fact — re-check it on **every** change. If a requested change would add device storage or a third-party runtime request — e.g. an **embedded YouTube/Vimeo video**, a **Google Maps embed**, **analytics/tag manager**, a **social widget**, **reCAPTCHA**, an **externally hosted font/CDN**, or a **persisted client-side preference** (localStorage/cookie) — then a real consent banner becomes legally required, and you must **not** silently implement the feature.
+
+Instead, **stop and notify the user before building it**, in their language, with this action plan ready:
+
+1. State plainly that the feature stores/reads data on the device or loads third-party content, so it flips the site from "no banner needed" to "a consent banner is now required" (EU/UK ePrivacy Art. 5(3)).
+2. Propose the implementation: a **proper but lean consent banner — Klaro self-hosted** preferred (open source, adds no third-party request), or **Cookiebot** if the board wants a named vendor. The banner must **block the third-party resource until the visitor opts in** (e.g. the YouTube embed loads only after consent), name only the categories actually used (no fake "Accept all"), and remember the choice in a first-party consent cookie.
+3. Update `datenschutz.html` **and** `en/privacy.html` to disclose the new cookies/processing and the consent mechanism.
+4. Get explicit confirmation on the approach before implementing either the feature or the banner.
+
+The full background and provider comparison from the legal analysis lives in the conversation history; the short version is: no banner until a trigger appears, then a self-hosted Klaro banner that gates the new third-party content.
 
 ## Fonts
 
