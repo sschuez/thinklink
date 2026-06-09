@@ -126,6 +126,20 @@ Instead, **stop and notify the user before building it**, in their language, wit
 
 The full background and provider comparison from the legal analysis lives in the conversation history; the short version is: no banner until a trigger appears, then a self-hosted Klaro banner that gates the new third-party content.
 
+#### Klaro implementation plan (for the day a trigger lands)
+
+The board has approved this lean approach in advance. Do **not** build it speculatively — there is nothing to gate today, and an idle banner would create the very consent cookie the site currently avoids. Build it only in the same change that introduces the first third-party resource. When that day comes:
+
+1. **Vendor the library — no CDN.** Download a pinned Klaro release (`klaro.js`, MIT-licensed, from KIProtect) and commit it under `assets/js/klaro.js`. Self-hosting is the whole point: it keeps the banner itself a zero-third-party-request asset. Never load Klaro from a CDN.
+2. **Config in its own file.** Add `assets/js/klaro-config.js` defining **one service per third party actually added** (e.g. `youtube`) and **one purpose** named for what it does (e.g. `external-media`). Set `default: false` and `required: false` (opt-in, never pre-ticked). Do **not** offer an "Accept all" that implies categories the site doesn't use. Set a clear first-party cookie name (e.g. `tl-consent`).
+3. **Contextual blocking, not just a notice.** The gated embed must not load until opt-in. Use Klaro's contextual blocking: give the iframe/script `data-name="youtube"` and `data-src="…"` (with the real `src` withheld) so Klaro injects it only after consent. A banner that "informs" but still loads the resource is non-compliant — the block is the legal point.
+4. **Style with our tokens.** Override Klaro's CSS variables to match `tokens.css` (palette, Newsreader/Public Sans) rather than shipping its stock theme. Keep it a lean strip, not a full-screen modal. Add the CSS as a new numbered section in `main.css` and update the TOC.
+5. **A re-open control.** Add a "Cookie-Einstellungen / Cookie settings" link in `_includes/footer.html` (both language branches) that calls `klaro.show()`, so a visitor can withdraw consent — withdrawal must be as easy as giving it.
+6. **Disclose in both privacy pages.** Update `datenschutz.html` **and** `en/privacy.html`: name the consent cookie (name, purpose, lifetime), the gated service, its own privacy policy and any new US/third-country transfer. The pages currently state the site sets *no* cookies — that sentence must change the moment the consent cookie exists.
+7. **Re-check the no-banner copy.** The "Grundsatz / Principle" and "Zielpublikum / Target audience" sections both assert no cookies and no consent needed. Reconcile them with the new reality in the same change.
+
+Keep it minimal: one service, one purpose, one first-party cookie. Cookiebot remains the fallback only if the board later insists on a named vendor — it phones home to a third party, so it is the heavier, less private option and is not the default.
+
 ## Fonts
 
 Self-hosted and committed to the repo under `assets/fonts/` — one `.woff2` per weight actually used (e.g. `Newsreader-400.woff2`, `Newsreader-400-Italic.woff2`, `PublicSans-500.woff2`). The `@font-face` declarations in `tokens.css` reference these by the `Family-Weight[-Italic].woff2` pattern. No request to `fonts.googleapis.com` / `fonts.gstatic.com` at runtime — this is what keeps the site cookie-banner-free, so keep fonts self-hosted. See `assets/fonts/README.md` to refresh the bundle. If a file were missing, the browser falls back to the system serif / sans stack and the site still renders.

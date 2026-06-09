@@ -878,6 +878,10 @@ section {
 
 .site-footer-inner a:hover { color: var(--ink); }
 
+.site-footer-meta { display: flex; flex-direction: column; gap: 6px; }
+
+.site-footer-note { font-size: 11px; letter-spacing: 0.06em; }
+
 .site-footer-links { display: flex; gap: 24px; }
 
 
