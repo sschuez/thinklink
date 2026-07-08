@@ -15,14 +15,17 @@
 {% endif %}
 
 <footer class="site-footer">
-  <div class="container site-footer-inner">
-    <div class="site-footer-meta">
-      <div>{{ footer_rights }}</div>
-      <a class="site-footer-note" href="{{ footer_privacy_url | relative_url }}">{{ footer_privacy_note }}</a>
-    </div>
-    <div class="site-footer-links">
-      <a href="{{ footer_imprint_url | relative_url }}">{{ footer_imprint }}</a>
-      <a href="{{ footer_privacy_url | relative_url }}">{{ footer_privacy }}</a>
+  <div class="container">
+    <img class="site-footer-logo" src="{{ '/assets/img/logo-full.png' | relative_url }}" alt="ThinkLink Association" width="64" height="64">
+    <div class="site-footer-inner">
+      <div class="site-footer-meta">
+        <div>{{ footer_rights }}</div>
+        <a class="site-footer-note" href="{{ footer_privacy_url | relative_url }}">{{ footer_privacy_note }}</a>
+      </div>
+      <div class="site-footer-links">
+        <a href="{{ footer_imprint_url | relative_url }}">{{ footer_imprint }}</a>
+        <a href="{{ footer_privacy_url | relative_url }}">{{ footer_privacy }}</a>
+      </div>
     </div>
   </div>
 </footer>
