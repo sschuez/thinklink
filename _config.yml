@@ -4,7 +4,7 @@ description: Gemeinnütziger Schweizer Verein für transdisziplinäres Denken zu
 # Origin used for canonical URLs, og:url and sitemap entries.
 # When moving to a custom domain, change this to the new origin and
 # add the domain to CNAME at the repo root.
-url: https://sschuez.github.io
+url: https://thinklinkassociation.org
 baseurl: ""
 
 plugins:
