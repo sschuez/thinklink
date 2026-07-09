@@ -672,6 +672,16 @@ section {
   object-fit: cover;
 }
 
+/* Art-directed crop: adds headroom above the head and keeps the
+   shoulders in the lower third of the frame for this specific photo. */
+.portrait-photo--enrico {
+  inset: auto;
+  top: 0;
+  left: -3.7%;
+  width: 127.2%;
+  height: auto;
+}
+
 .portrait::after {
   content: "";
   position: absolute;
