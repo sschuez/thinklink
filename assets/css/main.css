@@ -609,6 +609,16 @@ section {
   margin-bottom: 6px;
 }
 
+.volume-title a {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+}
+
+.volume-title a:hover {
+  color: var(--moss);
+  border-color: var(--moss);
+}
+
 .volume-editor {
   font-family: var(--sans);
   font-size: 12px;
